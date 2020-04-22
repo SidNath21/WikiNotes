@@ -7,14 +7,14 @@ body{
 }
 
 h1{
-    font-size: 55px;
+    font-size: 6vw;
     line-height: 0;
     letter-spacing: 0.25em;
     text-shadow: 3px 3px red;
 }
 
 h2{
-    font-size: 28px;
+    font-size: 24px;
     
     line-height: 1.5;
     color: red;
@@ -28,7 +28,7 @@ h3{
 
 #container{
 
-    min-width: 400px;
+    min-width: 450px;
     width: 50%;
     margin: 3em auto;
     border: 15px solid blue;
