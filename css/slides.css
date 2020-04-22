@@ -13,9 +13,10 @@ h1{
 }
 
 #container{
+    
     margin: 1em auto;
     width: 75%;
-    min-width: 500px;
+    min-width: 450px;
     border: 15px solid red;
     background-color: tomato;
     border-radius: 10px;
