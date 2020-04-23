@@ -12,6 +12,12 @@ h1{
     line-height: 1.5;
 }
 
+h2{
+    margin-top: 2em;
+    line-height: 1;
+    font-size: 32px;
+}
+
 #container{
     
     margin: 1em auto;
@@ -24,6 +30,27 @@ h1{
     flex-direction: column;
 }
 
+.introSlide{
+    text-align: center;
+    margin: 2em auto;
+    width: 90%;
+    border: 10px solid turquoise;
+    border-radius: 5px;
+    background-color: black ;
+    line-height: 1.5;
+    color: white;
+    overflow: hidden; 
+}
+
+.introSlideTitle{
+    font-size: 5vw;
+    
+    padding: 1em ;
+    text-align: center;
+    
+    text-transform: uppercase;
+}
+
 .slide{
     text-align: center;
     margin: 2em auto;
@@ -31,10 +58,6 @@ h1{
     border: 10px solid black;
     border-radius: 5px;
     background-color: #191919 ;
-    /*
-    display: flex;
-    flex-direction: column;
-    */
     line-height: 1.5;
     color: white;
     overflow: hidden; 
@@ -44,7 +67,6 @@ h1{
 
     font-size: 24px;
     border: 2px solid white;
-
 }
 
 .content{
@@ -52,3 +74,15 @@ h1{
     text-align: left;
     border: 2px solid white;
 }
+
+#download img{
+    margin: 1em auto 3em auto;
+    width: 200px;
+    opacity: 75%;
+}
+
+#download img:hover{
+    opacity: 100%;
+    
+}
+
