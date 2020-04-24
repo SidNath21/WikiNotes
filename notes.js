@@ -1,3 +1,5 @@
+
+
 const container = document.querySelector("#container");
 const title = document.querySelector("#title");
 const downloadButton = document.querySelector("#download");
@@ -7,12 +9,8 @@ titleString = titleString.substring(titleString.indexOf("=") + 1);
 title.textContent = "WIKI Notes";
 
 downloadButton.addEventListener("click", function(){
-
-
-    //download Button clicked
-
-
-
+    
+    
 });
 
 let slides = [];
@@ -29,11 +27,12 @@ function slide(heading, body){
 
 function updateSlides(){
     
-    
-    
     for(let i=0; i<slides.length; i++){
         
         // create slide
+
+        if(i!=0){
+
         const slide = document.createElement("div");
         slide.classList = "slide";
         slide.value = i;
@@ -50,7 +49,6 @@ function updateSlides(){
         const sildeHeading = document.createElement("div");
         sildeHeading.textContent = slideTitle;
         sildeHeading.classList = "slideHeading";
-        sildeHeading.contentEditable = "true";
         
         // create slide content
         const content = document.createElement("div");
@@ -84,12 +82,14 @@ function updateSlides(){
             if(editButton.textContent == "Edit"){
                 slide.style.borderColor = "#2ecc71";
                 content.contentEditable = "true";
+                sildeHeading.contentEditable = "true";
                 editButton.textContent = "Save";
             }
             else if(editButton.textContent == "Save" ){
                 console.log("ioegw");
                 slide.style.borderColor = "black"
                 content.contentEditable = "false";
+                sildeHeading.contentEditable = "false";
                 editButton.textContent = "Edit";
             }
         });
@@ -98,17 +98,29 @@ function updateSlides(){
         settings.appendChild(editButton);
         
         
-        
         slide.appendChild(sildeHeading);
         slide.appendChild(content);
         slide.appendChild(settings);
         
         container.appendChild(slide);
+
+        }
+
+        const addButton = document.createElement("button");
+        addButton.classList = "addButton";
+        addButton.textContent = "Add Slide";
+
+        addButton.addEventListener("click", function(){
+
+            console.log(i);
+
+        });
+        
+        container.appendChild(addButton);
+    
         
     }
-    
-    
-    
+       
 }
 
 function createTitleSlide(){
@@ -122,14 +134,20 @@ function createTitleSlide(){
     introSlideTitle.textContent = titleString;
     introSlide.appendChild(introSlideTitle);
     
+   
+
+    slides.push(introSlide);
+
     container.appendChild(introSlide);
+    
 }
 
 function delete_slide(index){
-    slides.slice(index, 1);
 
+    slides.slice(index, 1);
     updateSlides();
 }
+
 
 function createSampleSlides(){
     
@@ -139,9 +157,4 @@ function createSampleSlides(){
     updateSlides();
 
 }
-
-
-
-
-
 
