@@ -27,128 +27,129 @@ function updateSlides(){
 
         if(!slides[i].rendered){
         
-        // create slide
-
+        
 
             if(i!=0){
 
-            const slide = document.createElement("div");
-            slide.classList = "slide";
-            slide.value = i;
-            
-            let slideTitle = slides[i].heading;
-            let slideBody = slides[i].body;
-            
-            // parse slide body text
-            slideBody.replace("*", ".");
-            slideBody.replace('"', "'");
-            sentences = slideBody.split(". ");
-            
-            //create slide heading
-            const sildeHeading = document.createElement("div");
-            sildeHeading.textContent = slideTitle;
-            sildeHeading.classList = "slideHeading";
-            
-            // create slide content
-            const content = document.createElement("div");
-            content.classList = "content";
-            const list = document.createElement("ul");  
-            
-            // make bulletpoints
-            for(let j=0; j<sentences.length; j++){
-                const bullet = document.createElement("li");
-                bullet.classList = "bullet";
-                bullet.textContent = sentences[j];
-                list.appendChild(bullet);
+                const slide = document.createElement("div");
+                slide.classList = "slide";
+                slide.value = i;
+                
+                let slideTitle = slides[i].heading;
+                let slideBody = slides[i].body;
+                
+                // parse slide body text
+                slideBody.replace("*", ".");
+                slideBody.replace('"', "'");
+                sentences = slideBody.split(". ");
+                
+                //create slide heading
+                const sildeHeading = document.createElement("div");
+                sildeHeading.textContent = slideTitle;
+                sildeHeading.classList = "slideHeading";
+                
+                // create slide content
+                const content = document.createElement("div");
+                content.classList = "content";
+                const list = document.createElement("ul");  
+                
+                // make bulletpoints
+                for(let j=0; j<sentences.length; j++){
+                    const bullet = document.createElement("li");
+                    bullet.classList = "bullet";
+                    bullet.textContent = sentences[j];
+                    list.appendChild(bullet);
+                }
+                
+                content.appendChild(list);
+
+                
+                const settings = document.createElement("div");
+                settings.classList = "settings";
+
+                const deleteButton = document.createElement("button");
+                deleteButton.classList = "deleteButton";
+                deleteButton.textContent = "X";
+                deleteButton.addEventListener("click", function() {
+
+                    container.removeChild(slide);
+                    container.removeChild(addButton); 
+                    slides.splice(i, 1);
+                    
+                    console.log(slides);
+
+                    updateSlides();
+
+                });
+
+                const editButton = document.createElement("button");
+                editButton.classList = "editButton";
+                editButton.textContent = "Edit";
+
+                editButton.addEventListener("click", function() {
+                    if(editButton.textContent == "Edit"){
+                        slide.style.borderColor = "#2ecc71";
+                        content.contentEditable = "true";
+                        sildeHeading.contentEditable = "true";
+                        editButton.textContent = "Save";
+                    }
+                    else if(editButton.textContent == "Save" ){
+                        slide.style.borderColor = "black"
+                        content.contentEditable = "false";
+                        sildeHeading.contentEditable = "false";
+                        editButton.textContent = "Edit";
+                    }
+                });
+
+                settings.appendChild(deleteButton);
+                settings.appendChild(editButton);
+                
+                
+                slide.appendChild(sildeHeading);
+                slide.appendChild(content);
+                slide.appendChild(settings);
+                
+                container.appendChild(slide);
+
             }
-            
-            content.appendChild(list);
+        
 
-            
-            const settings = document.createElement("div");
-            settings.classList = "settings";
+            const addButton = document.createElement("button");
+            addButton.classList = "addButton";
+            addButton.textContent = "Add Slide";
 
-            const deleteButton = document.createElement("button");
-            deleteButton.classList = "deleteButton";
-            deleteButton.textContent = "X";
-            deleteButton.addEventListener("click", function() {
+            addButton.addEventListener("click", function(){
 
-                container.removeChild(slide);
-                container.removeChild(addButton); 
-                slides.splice(i, 1);
+                let count = container.childNodes.length;
+
+                while(count > 2){
+                    container.removeChild(container.lastChild);
+                    count--;
+                }
+
+                for(let j=0; j<slides.length; j++){
+                    slides[j].rendered = false;
+                }
                 
                 console.log(slides);
-
+                slides.splice(i+1, 0,  new slide(" ", " ", false));
                 updateSlides();
 
             });
-
-            const editButton = document.createElement("button");
-            editButton.classList = "editButton";
-            editButton.textContent = "Edit";
-
-            editButton.addEventListener("click", function() {
-                if(editButton.textContent == "Edit"){
-                    slide.style.borderColor = "#2ecc71";
-                    content.contentEditable = "true";
-                    sildeHeading.contentEditable = "true";
-                    editButton.textContent = "Save";
-                }
-                else if(editButton.textContent == "Save" ){
-                    slide.style.borderColor = "black"
-                    content.contentEditable = "false";
-                    sildeHeading.contentEditable = "false";
-                    editButton.textContent = "Edit";
-                }
-            });
-
-            settings.appendChild(deleteButton);
-            settings.appendChild(editButton);
             
-            
-            slide.appendChild(sildeHeading);
-            slide.appendChild(content);
-            slide.appendChild(settings);
-            
-            container.appendChild(slide);
-
-            }
+            container.appendChild(addButton);
+            slides[i].rendered = true;
         
-
-        const addButton = document.createElement("button");
-        addButton.classList = "addButton";
-        addButton.textContent = "Add Slide";
-
-        addButton.addEventListener("click", function(){
-
-           
-            createEmptySlide(i+1);
             
-
-        });
-        
-        container.appendChild(addButton);
-
-
-        slides[i].rendered = true;
-    
-        
         }
     }
 
-    
        
 }
 
 function createEmptySlide(index){
     
     slides.splice(index, 0,  new slide(" ", " ", false));
-
-    let s = document.querySelectorAll(".slide");
-   
-    // while (container.firstChild) {
-    //     container.removeChild(container.lastChild);
-    // }
  
     updateSlides();
 }
