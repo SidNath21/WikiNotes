@@ -20,7 +20,7 @@ createSampleSlides();
 function Slide(heading, body, image, rendered) {
     this.heading = heading;
     this.body = body; // paragraph text
-    this.image = image;
+    if(image != undefined) this.image = image;
     this.rendered = false;
 }
 
@@ -32,10 +32,6 @@ function updateSlides() {
         if (!slides[i].rendered) {
 
             if (i != 0) {
-
-
-               
-
 
                 const slide = document.createElement("div");
                 slide.classList = "slide";
@@ -69,12 +65,7 @@ function updateSlides() {
 
                 content.appendChild(list);
 
-
-
-
-
-
-                if(slides[i].image != undefined){
+                if(slides[i].image != undefined && slides[i].image != false){
 
                     console.log(slides[i].image);
 
