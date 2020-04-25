@@ -6,29 +6,30 @@ let titleString = decodeURIComponent(window.location.search);
 titleString = titleString.substring(titleString.indexOf("=") + 1);
 title.textContent = "WIKI Notes";
 
-downloadButton.addEventListener("click", function(){       });
+downloadButton.addEventListener("click", function(){    
+    
+    
+
+});
 
 let slides = [];
 
 createTitleSlide();
 createSampleSlides();
 
-function slide(heading, body, rendered){
+function Slide(heading, body, rendered){
     this.heading = heading;
     this.body = body; // paragraph text
     this.rendered = false;
 } 
 
 
-
 function updateSlides(){
     
     for(let i=0; i<slides.length; i++){
 
-        if(!slides[i].rendered){
+        if(!slides[i].rendered){            
         
-        
-
             if(i!=0){
 
                 const slide = document.createElement("div");
@@ -58,10 +59,13 @@ function updateSlides(){
                     const bullet = document.createElement("li");
                     bullet.classList = "bullet";
                     bullet.textContent = sentences[j];
-                    list.appendChild(bullet);
+                    if(bullet.textContent != "") list.appendChild(bullet);
                 }
+
                 
+
                 content.appendChild(list);
+                
 
                 
                 const settings = document.createElement("div");
@@ -72,15 +76,18 @@ function updateSlides(){
                 deleteButton.textContent = "X";
                 deleteButton.addEventListener("click", function() {
 
-                    container.removeChild(slide);
-                    container.removeChild(addButton); 
-                    slides.splice(i, 1);
+                    let c = confirm("Delete " + sildeHeading.textContent + " slide? ");
                     
-                    console.log(slides);
-
-                    updateSlides();
+                    if(c){
+                        container.removeChild(slide);
+                        container.removeChild(addButton); 
+                        slides.splice(i, 1);
+                        updateSlides();
+                    }
 
                 });
+
+
 
                 const editButton = document.createElement("button");
                 editButton.classList = "editButton";
@@ -97,13 +104,21 @@ function updateSlides(){
                         slide.style.borderColor = "black"
                         content.contentEditable = "false";
                         sildeHeading.contentEditable = "false";
-                        editButton.textContent = "Edit";
-                    }
+                        editButton.textContent = "Edit";  
+                        
+                        slides[i].heading = sildeHeading.textContent;
+                        console.log(slides[i].body);
+                        slides[i].body = ""; 
+                        for(let j=0; j<list.childNodes.length; j++) slides[i].body += list.childNodes[j].textContent + ". "; }
+                        
+                        
+                        
+                    
+                    
                 });
 
                 settings.appendChild(deleteButton);
                 settings.appendChild(editButton);
-                
                 
                 slide.appendChild(sildeHeading);
                 slide.appendChild(content);
@@ -113,7 +128,7 @@ function updateSlides(){
 
             }
         
-
+            
             const addButton = document.createElement("button");
             addButton.classList = "addButton";
             addButton.textContent = "Add Slide";
@@ -127,32 +142,24 @@ function updateSlides(){
                     count--;
                 }
 
-                for(let j=0; j<slides.length; j++){
-                    slides[j].rendered = false;
-                }
-                
-                console.log(slides);
-                slides.splice(i+1, 0,  new slide(" ", " ", false));
+                for(let j=0; j<slides.length; j++) slides[j].rendered = false;
+                slides.splice(i+1, 0,  new Slide(" ", " ", false));
                 updateSlides();
 
             });
             
             container.appendChild(addButton);
             slides[i].rendered = true;
-        
+
+            
             
         }
     }
+   // console.log(slides);
 
        
 }
 
-function createEmptySlide(index){
-    
-    slides.splice(index, 0,  new slide(" ", " ", false));
- 
-    updateSlides();
-}
 
 function createTitleSlide(){
 
@@ -165,17 +172,21 @@ function createTitleSlide(){
     introSlideTitle.textContent = titleString;
     introSlide.appendChild(introSlideTitle);
     
-    
     slides.push(introSlide);
     container.appendChild(introSlide);
     
 }
 
 
+
+
+
+
+
 function createSampleSlides(){
     
-    slides.push(new slide("Definition", "A circle is a shape consisting of all points in a plane that are a given distance from a given point, the centre; equivalently it is the curve traced out by a point that moves in a plane so that its distance from a given point is constant. The distance between any point of the circle and the centre is called the radius. This article is about circles in Euclidean geometry, and, in particular, the Euclidean plane, except where otherwise noted. Specifically, a circle is a simple closed curve that divides the plane into two regions: an interior and an exterior. In everyday use, the term circle may be used interchangeably to refer to either the boundary of the figure, or to the whole figure including its interior; in strict technical usage, the circle is only the boundary and the whole figure is called a disc. A circle may also be defined as a special kind of ellipse in which the two foci are coincident and the eccentricity is 0, or the two-dimensional shape enclosing the most area per unit perimeter squared, using calculus of variations.", false));
-    slides.push(new slide("Euclid's definition", "A circle is a plane figure bounded by one curved line, and such that all straight lines drawn from a certain point within it to the bounding line, are equal. The bounding line is called its circumference and the point, its centre.", false ));
+    slides.push(new Slide("Definition", "A circle is a shape consisting of all points in a plane that are a given distance from a given point, the centre; equivalently it is the curve traced out by a point that moves in a plane so that its distance from a given point is constant. The distance between any point of the circle and the centre is called the radius. This article is about circles in Euclidean geometry, and, in particular, the Euclidean plane, except where otherwise noted. Specifically, a circle is a simple closed curve that divides the plane into two regions: an interior and an exterior. In everyday use, the term circle may be used interchangeably to refer to either the boundary of the figure, or to the whole figure including its interior; in strict technical usage, the circle is only the boundary and the whole figure is called a disc. A circle may also be defined as a special kind of ellipse in which the two foci are coincident and the eccentricity is 0, or the two-dimensional shape enclosing the most area per unit perimeter squared, using calculus of variations.", false));
+    slides.push(new Slide("Euclid's definition", "A circle is a plane figure bounded by one curved line, and such that all straight lines drawn from a certain point within it to the bounding line, are equal. The bounding line is called its circumference and the point, its centre.", false ));
     
     updateSlides();
 
