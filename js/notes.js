@@ -83,10 +83,6 @@ function updateSlides() {
 
 
 
-
-
-
-
                 const settings = document.createElement("div");
                 settings.classList = "settings";
 
